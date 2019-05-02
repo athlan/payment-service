@@ -11,9 +11,6 @@
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
-    "lari/omnipay-payu-com": {
-        "version": "3.0.1"
-    },
     "league/omnipay": {
         "version": "v3.0.2"
     },
@@ -22,6 +19,9 @@
     },
     "omnipay/common": {
         "version": "v3.0.2"
+    },
+    "omnipay/dotpay": {
+        "version": "1.0.x-dev"
     },
     "php-http/discovery": {
         "version": "1.6.1"
@@ -58,9 +58,6 @@
     },
     "psr/simple-cache": {
         "version": "1.0.1"
-    },
-    "ptuchik/omnipay-dotpay": {
-        "version": "1.0.x-dev"
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
