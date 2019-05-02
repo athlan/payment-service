@@ -1,0 +1,3 @@
+[submodule "omnipay/omnipay-dotpay"]
+	path = omnipay/omnipay-dotpay
+	url = git@github.com:athlan/omnipay-dotpay.git
