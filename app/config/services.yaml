@@ -1,3 +1,6 @@
+imports:
+    - payment-gateway/**/*
+
 parameters:
 
 services:
@@ -5,14 +8,16 @@ services:
         autowire: true
         autoconfigure: true
 
-    App\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+#    App\:
+#        resource: '../src/*'
+#        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-    App\PaymentGateway\:
-        resource: '../src/PaymentGateway/*'
-        exclude: '../src/PaymentGateway/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+#    App\PaymentGateway\:
+#        resource: '../src/PaymentGateway/*'
+#        exclude: '../src/PaymentGateway/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-    App\PaymentGateway\Delivery\Controller\:
-        resource: '../src/PaymentGateway/Delivery/Controller'
-        tags: ['controller.service_arguments']
+#    App\PaymentGateway\Delivery\Controller\:
+#        resource: '../src/PaymentGateway/Delivery/Controller'
+#        tags: ['controller.service_arguments']
+#
+#    App\PaymentGateway\Domain\Usecase\ProcessPayment:

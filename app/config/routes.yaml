@@ -2,6 +2,16 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
+gateway.payment.register:
+    controller: 'A-pp\PaymentGateway\Delivery\Controller\RegisterPaymentController:registerPayment'
+    methods: POST
+    path: /payment
+
 gateway.payment.request:
+    controller: 'App\PaymentGateway\Delivery\Controller\ProcessPaymentController:processPayment'
+    methods: GET
+    path: /payment/{paymentId}/process
+
+gateway.payment.callback:
     controller: 'App\PaymentGateway\Delivery\Controller\PaymentRequestController:paymentRequest'
-    path: /paymentRequest
+    path: /payment/{paymentId}/callback
