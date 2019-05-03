@@ -20,14 +20,16 @@ class RegisterPayment
     public function registerPayment(
         Money $amount,
         string $description,
-        string $sourceSystem) : Uuid
+        string $sourceSystem,
+        string $paymentType) : Uuid
     {
         $now = new DateTime();
         $payment = new Payment(
             $amount,
             $description,
             $now,
-            $sourceSystem
+            $sourceSystem,
+            $paymentType
         );
 
         $this->paymentRepository->save($payment);

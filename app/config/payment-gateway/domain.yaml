@@ -3,4 +3,5 @@ services:
         autowire: true
         autoconfigure: true
 
+    App\PaymentGateway\Domain\Usecase\RegisterPayment:
     App\PaymentGateway\Domain\Usecase\ProcessPayment:
