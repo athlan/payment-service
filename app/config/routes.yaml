@@ -3,5 +3,9 @@
 #    controller: App\Controller\DefaultController::index
 
 gateway.payment.request:
+    controller: 'App\PaymentGateway\Delivery\Controller\ProcessPaymentController:processPayment'
+    path: /payment/{paymentId}/process
+
+gateway.payment.callback:
     controller: 'App\PaymentGateway\Delivery\Controller\PaymentRequestController:paymentRequest'
-    path: /paymentRequest
+    path: /payment/{paymentId}/callback

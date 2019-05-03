@@ -17,6 +17,9 @@
     "moneyphp/money": {
         "version": "v3.2.1"
     },
+    "myclabs/php-enum": {
+        "version": "1.6.6"
+    },
     "omnipay/common": {
         "version": "v3.0.2"
     },
@@ -61,6 +64,9 @@
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
+    },
+    "ramsey/uuid": {
+        "version": "3.8.0"
     },
     "symfony/cache": {
         "version": "v4.2.7"
