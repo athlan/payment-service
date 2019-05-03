@@ -3,7 +3,7 @@
 
 namespace App\PaymentGateway\Delivery\Controller;
 
-
+use Swagger\Annotations as Api;
 use App\PaymentGateway\Domain\Usecase\ProcessPayment;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +26,25 @@ class ProcessPaymentController extends AbstractController
         $this->processPayment = $processPayment;
     }
 
+    /**
+     * @Api\Get
+     * @Api\Response(
+     *     response=200,
+     *     description="Follows the payment processing. Displays the page or does a redirect to off-site flows."
+     * )
+     * @Api\Parameter(
+     *     name="paymentId",
+     *     in="path",
+     *     type="string",
+     * )
+     * @Api\Parameter(
+     *     name="return",
+     *     in="query",
+     *     type="string",
+     *     description="Return URL where to redirect user after payment process. If not provided HTTP Referer will be used."
+     * )
+     * @Api\Tag(name="payments")
+     */
     public function processPayment(Request $request, $paymentId)
     {
         $returnUrl = $this->getReturnUrl($request);

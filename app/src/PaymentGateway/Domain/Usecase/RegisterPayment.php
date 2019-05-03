@@ -17,6 +17,15 @@ class RegisterPayment
      */
     private $paymentRepository;
 
+    /**
+     * RegisterPayment constructor.
+     * @param PaymentRepository $paymentRepository
+     */
+    public function __construct(PaymentRepository $paymentRepository)
+    {
+        $this->paymentRepository = $paymentRepository;
+    }
+
     public function registerPayment(
         Money $amount,
         string $description,

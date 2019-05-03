@@ -19,9 +19,9 @@ class DummyPaymentRepository implements PaymentRepository
 
     function save(Payment $payment)
     {
-        var_dump($payment);
-        var_dump($payment->getEvents());
-        exit;
+//        var_dump($payment);
+//        var_dump($payment->getEvents());
+//        exit;
         // TODO: Implement save() method.
     }
 }

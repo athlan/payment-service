@@ -3,14 +3,19 @@
 
 namespace App\PaymentGateway\Delivery\Controller;
 
+use App\PaymentGateway\Delivery\Controller\Dto\ErrorDto;
+use FOS\RestBundle\View\View;
+use Swagger\Annotations as Api;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use App\PaymentGateway\Delivery\Controller\Dto\RegisterPaymentRequestDto;
 use App\PaymentGateway\Delivery\Controller\Dto\RegisterPaymentResponseDto;
 use App\PaymentGateway\Domain\Usecase\RegisterPayment;
-use LogicException;
 use Money\Currency;
 use Money\Money;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegisterPaymentController extends AbstractController
 {
@@ -28,23 +33,34 @@ class RegisterPaymentController extends AbstractController
         $this->registerPayment = $registerPayment;
     }
 
+    /**
+     * @Api\Post
+     * @Api\Response(
+     *     response=200,
+     *     description="Registers payment.",
+     *     @Model(type=RegisterPaymentResponseDto::class)
+     * )
+     * @Api\Parameter(
+     *     name="params",
+     *     in="body",
+     *     @Model(type=RegisterPaymentRequestDto::class)
+     * )
+     * @Api\Tag(name="payments")
+     *
+     * @ParamConverter("dto", converter="fos_rest.request_body")
+     */
     public function registerPayment(RegisterPaymentRequestDto $dto)
     {
-        try {
-            $paymentId = $this->registerPayment->registerPayment(
-                new Money($dto->amount, new Currency($dto->currency)),
-                $dto->description,
-                $dto->sourceSystem,
-                $dto->paymentType
-            );
+        $paymentId = $this->registerPayment->registerPayment(
+            new Money((int)$dto->amount, new Currency($dto->currency)),
+            $dto->description,
+            $dto->sourceSystem,
+            $dto->paymentType
+        );
 
-            $response = new RegisterPaymentResponseDto();
-            $response->paymentId = $paymentId;
-            return $response;
-        }
-        catch (LogicException $e) {
-            // TODO
-            echo $e->getMessage();
-        }
+        $response = new RegisterPaymentResponseDto();
+        $response->paymentId = $paymentId;
+
+        return View::create($response, Response::HTTP_CREATED);
     }
 }
