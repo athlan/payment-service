@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\PaymentGateway\Infrastructure\GatewayDotpay;
+namespace App\PaymentGateway\Gateway\Dotpay;
 
 
 use App\PaymentGateway\Domain\Model\GatewayFactory as IGatewayFactory;

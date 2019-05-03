@@ -1,0 +1,9 @@
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\PaymentGateway\Delivery\Controller\:
+        resource: '../../../src/PaymentGateway/Delivery/Controller'
+        tags: ['controller.service_arguments']

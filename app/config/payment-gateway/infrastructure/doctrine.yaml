@@ -1,0 +1,8 @@
+services:
+#    _defaults:
+#        autowire: true
+#        autoconfigure: true
+
+    App\PaymentGateway\Infrastructure\FilePaymentRepository:
+
+    App\PaymentGateway\Domain\Model\PaymentRepository: '@App\PaymentGateway\Infrastructure\FilePaymentRepository'
