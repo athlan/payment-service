@@ -20,9 +20,18 @@ class GatewaySelection
      * @param int $priority
      * @return GatewaySelection
      */
-    public function registerGatewayFactory(GatewayFactory $gatewayFactory, array $predicates, int $priority = 1): GatewaySelection
+    public function registerGatewayFactory(
+        GatewayFactory $gatewayFactory,
+        array $predicates,
+        int $priority = 1
+    ): GatewaySelection
     {
-        $this->gateways[] = new GatewayWithConditions($gatewayFactory, $predicates, $priority);
+        $this->gateways[] = new GatewayWithConditions(
+            $gatewayFactory,
+            $predicates,
+            $priority
+        );
+
         return $this;
     }
 
@@ -44,5 +53,12 @@ class GatewaySelection
         }
 
         return null;
+    }
+
+    public function selectGatewayById(string $gatewayId) : ?GatewayFactory
+    {
+        return array_filter($this->gateways, function (GatewayWithConditions $gatewayWithConditions) use ($gatewayId) {
+            return $gatewayWithConditions->getGateway()->gatewayId() === $gatewayId;
+        });
     }
 }

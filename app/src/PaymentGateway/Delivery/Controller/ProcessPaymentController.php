@@ -28,14 +28,12 @@ class ProcessPaymentController extends AbstractController
 
     public function processPayment(Request $request, $paymentId)
     {
-        $gatewayType = 'transfer';
         $returnUrl = $this->getReturnUrl($request);
         $callbackUrl = $this->getCallbackUrl($paymentId);
 
         try {
             $response = $this->processPayment->processPayment(
                 Uuid::fromString($paymentId),
-                $gatewayType,
                 $returnUrl,
                 $callbackUrl
             );

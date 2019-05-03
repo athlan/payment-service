@@ -9,6 +9,11 @@ use Omnipay\Common\GatewayInterface;
 interface GatewayFactory
 {
     /**
+     * @return string
+     */
+    function gatewayId() : string;
+
+    /**
      * @return GatewayInterface
      */
     function createGateway() : GatewayInterface;

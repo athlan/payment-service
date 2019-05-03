@@ -3,6 +3,6 @@ services:
 #        autowire: true
 #        autoconfigure: true
 
-    App\PaymentGateway\Infrastructure\FilePaymentRepository:
+    App\PaymentGateway\Infrastructure\DummyPaymentRepository:
 
-    App\PaymentGateway\Domain\Model\PaymentRepository: '@App\PaymentGateway\Infrastructure\FilePaymentRepository'
+    App\PaymentGateway\Domain\Model\PaymentRepository: '@App\PaymentGateway\Infrastructure\DummyPaymentRepository'

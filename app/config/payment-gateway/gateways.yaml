@@ -10,16 +10,17 @@ services:
               arguments:
                   $gatewayFactory: '@gateway.factory.dotpay'
                   $predicates:
-                      - '@gateway.predicate.byGatewayType.transfer'
+                      - '@gateway.predicate.byPaymentType.transfer'
 
-    gateway.predicate.byGatewayType.transfer:
-        class: App\PaymentGateway\Domain\Usecase\GatewaySelection\Predicate\ByGatewayType
+    gateway.predicate.byPaymentType.transfer:
+        class: App\PaymentGateway\Domain\Usecase\GatewaySelection\Predicate\ByPaymentType
         arguments: ['transfer']
 
     # Gateways configs
     gateway.factory.dotpay:
         class: App\PaymentGateway\Gateway\Dotpay\GatewayFactory
         arguments:
+            $gatewayId: 'dotpay'
             $params:
                 accountId: 'XXX'
                 pid: 'XXX'

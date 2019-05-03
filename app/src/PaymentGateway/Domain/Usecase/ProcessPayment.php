@@ -12,6 +12,7 @@ use App\PaymentGateway\Domain\Usecase\GatewaySelection\GatewaySelection;
 use LogicException;
 use Omnipay\Common\Message\ResponseInterface;
 use Ramsey\Uuid\UuidInterface;
+use DateTime;
 
 class ProcessPayment
 {
@@ -36,7 +37,7 @@ class ProcessPayment
         $this->gatewaySelection = $gatewaySelection;
     }
 
-    public function processPayment(UuidInterface $paymentId, $gatewayType, $returnUrl, $callbackUrl): ResponseInterface
+    public function processPayment(UuidInterface $paymentId, $returnUrl, $callbackUrl): ResponseInterface
     {
         $payment = $this->paymentRepository->getByPaymentId($paymentId);
 
@@ -48,7 +49,8 @@ class ProcessPayment
             throw new LogicException("Payment is not new");
         }
 
-        $paymentProcessing = new PaymentProcessing($payment, $gatewayType);
+        $now = new DateTime();
+        $paymentProcessing = new PaymentProcessing($payment);
 
         $gatewayFactory = $this->gatewaySelection->selectGateway($paymentProcessing);
         if ($gatewayFactory === null) {
@@ -62,6 +64,9 @@ class ProcessPayment
 
         $response = $gateway->purchase($purchaseParams)
             ->send();
+
+        $payment->process($now, $gatewayFactory->gatewayId());
+        $this->paymentRepository->save($payment);
 
         if ($response->isRedirect()) {
             return $response;

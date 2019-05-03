@@ -9,6 +9,7 @@ use Ramsey\Uuid\Uuid;
 use DateTime;
 use Exception;
 use RuntimeException;
+use LogicException;
 
 class Payment
 {
@@ -38,9 +39,19 @@ class Payment
     private $sourceSystem;
 
     /**
+     * @var string
+     */
+    private $paymentType;
+
+    /**
      * @var Status
      */
     private $status;
+
+    /**
+     * @var
+     */
+    private $events;
 
     /**
      * Payment constructor.
@@ -48,15 +59,19 @@ class Payment
      * @param string $description
      * @param DateTime $createdAt
      * @param string $sourceSystem
+     * @param string $paymentType
      */
-    public function __construct(Money $amount, string $description, DateTime $createdAt, string $sourceSystem)
+    public function __construct(Money $amount, string $description, DateTime $createdAt, string $sourceSystem, string $paymentType)
     {
         $this->paymentId = $this->generateId();
         $this->amount = $amount;
         $this->description = $description;
         $this->createdAt = $createdAt;
         $this->sourceSystem = $sourceSystem;
+        $this->paymentType = $paymentType;
+
         $this->status = Status::NEW();
+        $this->events[] = new PaymentEvent(PaymentEventType::CREATED(), $createdAt);
     }
 
     private function generateId()
@@ -110,6 +125,14 @@ class Payment
     }
 
     /**
+     * @return string
+     */
+    public function getPaymentType(): string
+    {
+        return $this->paymentType;
+    }
+
+    /**
      * @return Status
      */
     public function getStatus(): Status
@@ -126,5 +149,23 @@ class Payment
         return $this->status->equals($expected);
     }
 
+    /**
+     * @return PaymentEvent[]
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
 
+    public function process(DateTime $processAt, string $gatewayId)
+    {
+        if (!$this->hasStatus(Status::NEW())) {
+            throw new LogicException("Payment cannot be processed because it's not new");
+        }
+
+        $this->status = Status::IN_PROCESS();
+        $this->events[] = new PaymentEvent(PaymentEventType::PROCESS_START(), $processAt, [
+            'gatewayId' => $gatewayId,
+        ]);
+    }
 }

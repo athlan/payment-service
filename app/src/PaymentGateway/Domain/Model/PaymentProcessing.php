@@ -12,19 +12,12 @@ class PaymentProcessing
     private $payment;
 
     /**
-     * @var string
-     */
-    private $gatewayType;
-
-    /**
      * PaymentProcessing constructor.
      * @param Payment $payment
-     * @param string $gatewayType
      */
-    public function __construct(Payment $payment, string $gatewayType)
+    public function __construct(Payment $payment)
     {
         $this->payment = $payment;
-        $this->gatewayType = $gatewayType;
     }
 
     /**
@@ -33,13 +26,5 @@ class PaymentProcessing
     public function getPayment(): Payment
     {
         return $this->payment;
-    }
-
-    /**
-     * @return string
-     */
-    public function getGatewayType(): string
-    {
-        return $this->gatewayType;
     }
 }

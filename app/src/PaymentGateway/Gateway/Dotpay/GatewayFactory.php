@@ -12,17 +12,32 @@ use Omnipay\Omnipay;
 class GatewayFactory implements IGatewayFactory
 {
     /**
+     * @var string
+     */
+    private $gatewayId;
+
+    /**
      * @var array
      */
     private $params;
 
     /**
      * GatewayFactory constructor.
+     * @param string gatewayId
      * @param array $params
      */
-    public function __construct(array $params)
+    public function __construct(string $gatewayId, array $params)
     {
+        $this->gatewayId = $gatewayId;
         $this->params = $params;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    function gatewayId(): string
+    {
+        return $this->gatewayId;
     }
 
     /**
