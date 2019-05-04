@@ -59,7 +59,7 @@ class RegisterPaymentController extends AbstractController
         );
 
         $response = new RegisterPaymentResponseDto();
-        $response->paymentId = $paymentId;
+        $response->paymentId = $paymentId->toString();
 
         return View::create($response, Response::HTTP_CREATED);
     }
