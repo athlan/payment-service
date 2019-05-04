@@ -4,18 +4,16 @@
 namespace App\PaymentGateway\Delivery\Controller;
 
 use App\PaymentGateway\Delivery\Controller\Dto\ErrorDto;
-use FOS\RestBundle\View\View;
-use Swagger\Annotations as Api;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
 use App\PaymentGateway\Delivery\Controller\Dto\RegisterPaymentRequestDto;
 use App\PaymentGateway\Delivery\Controller\Dto\RegisterPaymentResponseDto;
 use App\PaymentGateway\Domain\Usecase\RegisterPayment;
-use Money\Currency;
-use Money\Money;
+use FOS\RestBundle\View\View;
+use Money\Parser\DecimalMoneyParser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Swagger\Annotations as Api;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class RegisterPaymentController extends AbstractController
 {
@@ -25,12 +23,20 @@ class RegisterPaymentController extends AbstractController
     private $registerPayment;
 
     /**
+     * @var DecimalMoneyParser
+     */
+    private $moneyParser;
+
+    /**
      * RegisterPaymentController constructor.
      * @param RegisterPayment $registerPayment
+     * @param DecimalMoneyParser $moneyParser
      */
-    public function __construct(RegisterPayment $registerPayment)
+    public function __construct(RegisterPayment $registerPayment,
+                                DecimalMoneyParser $moneyParser)
     {
         $this->registerPayment = $registerPayment;
+        $this->moneyParser = $moneyParser;
     }
 
     /**
@@ -52,7 +58,7 @@ class RegisterPaymentController extends AbstractController
     public function registerPayment(RegisterPaymentRequestDto $dto)
     {
         $paymentId = $this->registerPayment->registerPayment(
-            new Money((int)$dto->amount, new Currency($dto->currency)),
+            $this->moneyParser->parse((string) $dto->amount, $dto->currency),
             $dto->description,
             $dto->sourceSystem,
             $dto->paymentType

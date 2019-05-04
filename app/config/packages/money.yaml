@@ -1,0 +1,5 @@
+services:
+    Money\Currencies\ISOCurrencies:
+
+    Money\Parser\DecimalMoneyParser:
+        $currencies: '@Money\Currencies\ISOCurrencies'
