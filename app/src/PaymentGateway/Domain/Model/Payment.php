@@ -168,4 +168,38 @@ class Payment
             'gatewayId' => $gatewayId,
         ]);
     }
+
+    public function callbackNotification(DateTime $processAt, array $data)
+    {
+        $this->events[] = new PaymentEvent(PaymentEventType::CALLBACK_NOTIFICATION(), $processAt, $data);
+    }
+
+    public function pending(DateTime $processAt)
+    {
+        if (!$this->hasStatus(Status::IN_PROCESS())) {
+            throw new LogicException("Payment cannot be processed because it's not in process");
+        }
+
+        $this->events[] = new PaymentEvent(PaymentEventType::NOTIFICATION_PENDING(), $processAt);
+    }
+
+    public function completedFailed(DateTime $processAt)
+    {
+        if (!$this->hasStatus(Status::IN_PROCESS())) {
+            throw new LogicException("Payment cannot be processed because it's not in process");
+        }
+
+        $this->status = Status::COMPLETED_FAILURE();
+        $this->events[] = new PaymentEvent(PaymentEventType::COMPLETED_FAILURE(), $processAt);
+    }
+
+    public function completedSuccess(DateTime $processAt)
+    {
+        if (!$this->hasStatus(Status::IN_PROCESS())) {
+            throw new LogicException("Payment cannot be processed because it's not in process");
+        }
+
+        $this->status = Status::COMPLETED_SUCCESS();
+        $this->events[] = new PaymentEvent(PaymentEventType::COMPLETED_SUCCESS(), $processAt);
+    }
 }

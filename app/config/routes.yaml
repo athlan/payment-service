@@ -15,5 +15,6 @@ gateway.payment.request:
     defaults: { _format: json }
 
 gateway.payment.callback:
-    controller: 'App\PaymentGateway\Delivery\Controller\PaymentRequestController:paymentRequest'
+    controller: 'App\PaymentGateway\Delivery\Controller\CallbackPaymentController:callbackPayment'
     path: /payment/{paymentId}/callback
+    methods: POST|GET
