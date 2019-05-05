@@ -9,6 +9,7 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use LogicException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ProcessPaymentController extends AbstractController
 {
@@ -77,6 +78,6 @@ class ProcessPaymentController extends AbstractController
     {
         return $this->generateUrl('gateway.payment.callback', [
             'paymentId' => $paymentId,
-        ]);
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 }
