@@ -174,7 +174,7 @@ class Payment
         $this->events[] = new PaymentEvent(PaymentEventType::CALLBACK_NOTIFICATION(), $processAt, $data);
     }
 
-    public function pending(DateTime $processAt)
+    public function markAsPending(DateTime $processAt)
     {
         if (!$this->hasStatus(Status::IN_PROCESS())) {
             throw new LogicException("Payment cannot be processed because it's not in process");
@@ -183,7 +183,7 @@ class Payment
         $this->events[] = new PaymentEvent(PaymentEventType::NOTIFICATION_PENDING(), $processAt);
     }
 
-    public function completedFailed(DateTime $processAt)
+    public function markAsCompletedFailed(DateTime $processAt)
     {
         if (!$this->hasStatus(Status::IN_PROCESS())) {
             throw new LogicException("Payment cannot be processed because it's not in process");
@@ -193,7 +193,7 @@ class Payment
         $this->events[] = new PaymentEvent(PaymentEventType::COMPLETED_FAILURE(), $processAt);
     }
 
-    public function completedSuccess(DateTime $processAt)
+    public function markAsCompletedSuccess(DateTime $processAt)
     {
         if (!$this->hasStatus(Status::IN_PROCESS())) {
             throw new LogicException("Payment cannot be processed because it's not in process");

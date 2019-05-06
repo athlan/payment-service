@@ -65,13 +65,13 @@ class CallbackPayment
 
         if ($response->isSuccessful()) {
             if ($response->getTransactionStatus() === NotificationInterface::STATUS_PENDING) {
-                $payment->pending($now);
+                $payment->markAsPending($now);
             }
             if ($response->getTransactionStatus() === NotificationInterface::STATUS_FAILED) {
-                $payment->completedFailed($now);
+                $payment->markAsCompletedFailed($now);
             }
             if ($response->getTransactionStatus() === NotificationInterface::STATUS_COMPLETED) {
-                $payment->completedSuccess($now);
+                $payment->markAsCompletedSuccess($now);
             }
         }
 
