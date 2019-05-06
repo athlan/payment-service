@@ -13,6 +13,7 @@ use Omnipay\Common\Message\NotificationInterface;
 use Omnipay\Common\Message\ResponseInterface;
 use Ramsey\Uuid\UuidInterface;
 use DateTime;
+use Exception;
 
 class CallbackPayment
 {
@@ -47,37 +48,50 @@ class CallbackPayment
 
         $now = new DateTime();
 
-        $payment->callbackNotification($now, $params);
-        $this->paymentRepository->save($payment);
+        $notificationData = [
+            'success' => true,
+            'params' => $params,
+        ];
 
-        $gatewayId = $this->getGatewayId($payment);
+        try {
+            $gatewayId = $this->getGatewayId($payment);
 
-        $gatewayFactory = $this->gatewaySelection->selectGatewayById($gatewayId);
-        if ($gatewayFactory === null) {
-            throw new LogicException("No gateway supports this payment");
+            $gatewayFactory = $this->gatewaySelection->selectGatewayById($gatewayId);
+            if ($gatewayFactory === null) {
+                throw new LogicException("No gateway supports this payment");
+            }
+
+            $gateway = $gatewayFactory->createGateway();
+
+            /* @var $response NotificationInterface */
+            $response = $gateway->completePurchase($params)
+                ->send();
+
+            if ($response->isSuccessful()) {
+                if ($response->getTransactionStatus() === NotificationInterface::STATUS_PENDING) {
+                    $payment->markAsPending($now);
+                }
+                if ($response->getTransactionStatus() === NotificationInterface::STATUS_FAILED) {
+                    $payment->markAsCompletedFailed($now);
+                }
+                if ($response->getTransactionStatus() === NotificationInterface::STATUS_COMPLETED) {
+                    $payment->markAsCompletedSuccess($now);
+                }
+            }
+
+            $payment->callbackNotification($now, $notificationData);
+            $this->paymentRepository->save($payment);
+
+            return $response;
         }
+        catch (Exception $e) {
+            $notificationData['success'] = false;
 
-        $gateway = $gatewayFactory->createGateway();
+            $payment->callbackNotification($now, $notificationData);
+            $this->paymentRepository->save($payment);
 
-        /* @var $response NotificationInterface */
-        $response = $gateway->completePurchase($params)
-            ->send();
-
-        if ($response->isSuccessful()) {
-            if ($response->getTransactionStatus() === NotificationInterface::STATUS_PENDING) {
-                $payment->markAsPending($now);
-            }
-            if ($response->getTransactionStatus() === NotificationInterface::STATUS_FAILED) {
-                $payment->markAsCompletedFailed($now);
-            }
-            if ($response->getTransactionStatus() === NotificationInterface::STATUS_COMPLETED) {
-                $payment->markAsCompletedSuccess($now);
-            }
+            throw $e;
         }
-
-        $this->paymentRepository->save($payment);
-
-        return $response;
     }
 
     private function getGatewayId(Payment $payment)
