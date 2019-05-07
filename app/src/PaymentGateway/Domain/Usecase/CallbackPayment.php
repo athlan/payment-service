@@ -28,14 +28,23 @@ class CallbackPayment
     private $gatewaySelection;
 
     /**
+     * @var CompletePayment
+     */
+    private $completePayment;
+
+    /**
      * CallbackPayment constructor.
      * @param PaymentRepository $paymentRepository
      * @param GatewaySelection $gatewaySelection
+     * @param CompletePayment $completePayment
      */
-    public function __construct(PaymentRepository $paymentRepository, GatewaySelection $gatewaySelection)
+    public function __construct(PaymentRepository $paymentRepository,
+                                GatewaySelection $gatewaySelection,
+                                CompletePayment $completePayment)
     {
         $this->paymentRepository = $paymentRepository;
         $this->gatewaySelection = $gatewaySelection;
+        $this->completePayment = $completePayment;
     }
 
     public function callbackPayment(UuidInterface $paymentId, array $params): ResponseInterface
@@ -69,13 +78,13 @@ class CallbackPayment
 
             if ($response->isSuccessful()) {
                 if ($response->getTransactionStatus() === NotificationInterface::STATUS_PENDING) {
-                    $payment->markAsPending($now);
+                    $this->completePayment->markAsPending($paymentId, $now);
                 }
                 if ($response->getTransactionStatus() === NotificationInterface::STATUS_FAILED) {
-                    $payment->markAsCompletedFailed($now);
+                    $this->completePayment->markAsCompletedFailed($paymentId, $now);
                 }
                 if ($response->getTransactionStatus() === NotificationInterface::STATUS_COMPLETED) {
-                    $payment->markAsCompletedSuccess($now);
+                    $this->completePayment->markAsCompletedSuccess($paymentId, $now);
                 }
             }
 
@@ -83,8 +92,7 @@ class CallbackPayment
             $this->paymentRepository->save($payment);
 
             return $response;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $notificationData['success'] = false;
 
             $payment->callbackNotification($now, $notificationData);
