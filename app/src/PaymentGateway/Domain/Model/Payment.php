@@ -141,7 +141,7 @@ class Payment
      */
     public function getStatus(): Status
     {
-        return $this->status;
+        return new Status($this->status);
     }
 
     /**
@@ -150,7 +150,7 @@ class Payment
      */
     public function hasStatus(Status $expected): bool
     {
-        return $expected->equals(new Status($this->status));
+        return $expected->equals($this->getStatus());
     }
 
     /**
