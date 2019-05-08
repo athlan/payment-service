@@ -5,7 +5,7 @@
 
     <entity name="App\PaymentGateway\Domain\Model\PaymentEvent" table="payments_events">
 
-        <id name="eventId" column="event_id" type="string" length="36">
+        <id name="eventId" column="event_id" type="uuid" length="36">
             <generator strategy="NONE" />
         </id>
 

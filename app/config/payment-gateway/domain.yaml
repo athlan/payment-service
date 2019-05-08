@@ -11,7 +11,13 @@ services:
 doctrine:
     orm:
         mappings:
-            PaymentGateway:
+            Money:
+                is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/PaymentGateway/Infrastructure/Doctrine/mappings'
+                dir: '%kernel.project_dir%/src/PaymentGateway/Infrastructure/Doctrine/mappings/money'
+                prefix: 'Money'
+            PaymentGateway:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/PaymentGateway/Infrastructure/Doctrine/mappings/domain'
                 prefix: 'App\PaymentGateway\Domain\Model'

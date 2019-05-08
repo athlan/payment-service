@@ -5,10 +5,11 @@
 
     <entity name="App\PaymentGateway\Domain\Model\Payment" table="payments">
 
-        <id name="paymentId" column="id" type="string" length="36">
+        <id name="paymentId" column="id" type="uuid" length="36">
             <generator strategy="NONE" />
         </id>
 
+        <embedded name="amount" class="Money\Money" use-column-prefix="false" />
         <field name="description" column="description" type="string" nullable="true" />
         <field name="createdAt" column="created_at" type="datetime" nullable="true" />
         <field name="sourceSystem" column="source_system" type="string" nullable="false" />
