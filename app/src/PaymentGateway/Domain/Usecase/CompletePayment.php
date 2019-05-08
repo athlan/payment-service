@@ -36,7 +36,7 @@ class CompletePayment
         $this->paymentRepository->save($payment);
     }
 
-    public function markAsCompletedFailed(UuidInterface $paymentId, DateTime $now)
+    public function markAsCompletedFailed(UuidInterface $paymentId, DateTime $now, array $metadata = null)
     {
         $payment = $this->paymentRepository->getByPaymentId($paymentId);
 
@@ -44,11 +44,11 @@ class CompletePayment
             throw new LogicException("Payment does not exists");
         }
 
-        $payment->markAsCompletedFailed($now);
+        $payment->markAsCompletedFailed($now, $metadata);
         $this->paymentRepository->save($payment);
     }
 
-    public function markAsCompletedSuccess(UuidInterface $paymentId, DateTime $now)
+    public function markAsCompletedSuccess(UuidInterface $paymentId, DateTime $now, array $metadata = null)
     {
         $payment = $this->paymentRepository->getByPaymentId($paymentId);
 
@@ -56,7 +56,7 @@ class CompletePayment
             throw new LogicException("Payment does not exists");
         }
 
-        $payment->markAsCompletedSuccess($now);
+        $payment->markAsCompletedSuccess($now, $metadata);
         $this->paymentRepository->save($payment);
     }
 }

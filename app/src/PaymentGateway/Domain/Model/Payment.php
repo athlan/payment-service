@@ -187,24 +187,24 @@ class Payment
         $this->event(new PaymentEvent($this->paymentId, PaymentEventType::NOTIFICATION_PENDING(), $processAt));
     }
 
-    public function markAsCompletedFailed(DateTime $processAt)
+    public function markAsCompletedFailed(DateTime $processAt, array $metadata = null)
     {
         if (!$this->hasStatus(Status::IN_PROCESS())) {
             throw new LogicException("Payment cannot be processed because it's not in process");
         }
 
         $this->status = Status::COMPLETED_FAILURE();
-        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::COMPLETED_FAILURE(), $processAt));
+        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::COMPLETED_FAILURE(), $processAt, $metadata));
     }
 
-    public function markAsCompletedSuccess(DateTime $processAt)
+    public function markAsCompletedSuccess(DateTime $processAt, array $metadata = null)
     {
         if (!$this->hasStatus(Status::IN_PROCESS())) {
             throw new LogicException("Payment cannot be processed because it's not in process");
         }
 
         $this->status = Status::COMPLETED_SUCCESS();
-        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::COMPLETED_SUCCESS(), $processAt));
+        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::COMPLETED_SUCCESS(), $processAt, $metadata));
     }
 
     private function event(PaymentEvent $event)

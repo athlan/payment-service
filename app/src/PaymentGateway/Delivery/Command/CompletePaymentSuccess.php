@@ -10,6 +10,7 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CompletePaymentSuccess extends Command
@@ -35,13 +36,27 @@ class CompletePaymentSuccess extends Command
             ->setName('app:payment:complete:success')
             ->setDescription('Complete payment with success.')
             ->addArgument("paymentId", InputArgument::REQUIRED)
+            ->addOption("author", "a", InputOption::VALUE_REQUIRED, "Intervention author")
+            ->addOption("message", "m", InputOption::VALUE_REQUIRED, "Intervention reason message")
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $paymentId = $input->getArgument("paymentId");
 
+        if(empty($input->getOption("author"))) {
+            throw new \InvalidArgumentException("Missing author option");
+        }
+        if(empty($input->getOption("message"))) {
+            throw new \InvalidArgumentException("Missing message option");
+        }
+
+        $metadata = [
+            'author' => $input->getOption("author"),
+            'interventionReason' => $input->getOption("message"),
+        ];
+
         $now = new DateTime();
-        $this->completePayment->markAsCompletedSuccess(Uuid::fromString($paymentId), $now);
+        $this->completePayment->markAsCompletedSuccess(Uuid::fromString($paymentId), $now, $metadata);
     }
 }
