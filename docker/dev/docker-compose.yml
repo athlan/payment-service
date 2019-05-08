@@ -2,14 +2,12 @@ version: '2'
 
 services:
     db:
-        image: mysql:5.7
+        image: postgres:11.2
         volumes:
-            - "./var/data/db:/var/lib/mysql"
+            - "./var/data/db-pg:/var/lib/postgresql/data"
         environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_USER: ${MYSQL_USER}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            POSTGRES_DB: ${POSTGRES_DATABASE}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     php:
         build:
             context: php7-fpm
@@ -26,9 +24,8 @@ services:
             - php
         volumes:
             - ./var/logs/nginx/:/var/log/nginx
-    pma:
-        image: phpmyadmin/phpmyadmin
+    adminer:
+        image: adminer
+        restart: always
         ports:
-            - ${DB_ADMIN_PORT}:80
-        environment:
-            PMA_PORT: 80
+            - ${DB_ADMIN_PORT}:8080

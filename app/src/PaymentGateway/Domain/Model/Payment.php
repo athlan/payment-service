@@ -4,7 +4,9 @@
 namespace App\PaymentGateway\Domain\Model;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Money\Money;
+use MyCLabs\Enum\Enum;
 use Ramsey\Uuid\Uuid;
 use DateTime;
 use Exception;
@@ -49,7 +51,7 @@ class Payment
     private $status;
 
     /**
-     * @var
+     * @var ArrayCollection<PaymentEvent>
      */
     private $events;
 
@@ -71,7 +73,9 @@ class Payment
         $this->paymentType = $paymentType;
 
         $this->status = Status::NEW();
-        $this->events[] = new PaymentEvent(PaymentEventType::CREATED(), $createdAt);
+
+        $this->events = new ArrayCollection();
+        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::CREATED(), $createdAt));
     }
 
     private function generateId()
@@ -146,7 +150,7 @@ class Payment
      */
     public function hasStatus(Status $expected): bool
     {
-        return $this->status->equals($expected);
+        return $expected->equals(new Status($this->status));
     }
 
     /**
@@ -154,7 +158,7 @@ class Payment
      */
     public function getEvents()
     {
-        return $this->events;
+        return $this->events->toArray();
     }
 
     public function process(DateTime $processAt, string $gatewayId)
@@ -164,8 +168,47 @@ class Payment
         }
 
         $this->status = Status::IN_PROCESS();
-        $this->events[] = new PaymentEvent(PaymentEventType::PROCESS_START(), $processAt, [
+        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::PROCESS_START(), $processAt, [
             'gatewayId' => $gatewayId,
-        ]);
+        ]));
+    }
+
+    public function callbackNotification(DateTime $processAt, array $data)
+    {
+        $this->events[] = new PaymentEvent($this->paymentId, PaymentEventType::CALLBACK_NOTIFICATION(), $processAt, $data);
+    }
+
+    public function markAsPending(DateTime $processAt)
+    {
+        if (!$this->hasStatus(Status::IN_PROCESS())) {
+            throw new LogicException("Payment cannot be processed because it's not in process");
+        }
+
+        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::NOTIFICATION_PENDING(), $processAt));
+    }
+
+    public function markAsCompletedFailed(DateTime $processAt)
+    {
+        if (!$this->hasStatus(Status::IN_PROCESS())) {
+            throw new LogicException("Payment cannot be processed because it's not in process");
+        }
+
+        $this->status = Status::COMPLETED_FAILURE();
+        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::COMPLETED_FAILURE(), $processAt));
+    }
+
+    public function markAsCompletedSuccess(DateTime $processAt)
+    {
+        if (!$this->hasStatus(Status::IN_PROCESS())) {
+            throw new LogicException("Payment cannot be processed because it's not in process");
+        }
+
+        $this->status = Status::COMPLETED_SUCCESS();
+        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::COMPLETED_SUCCESS(), $processAt));
+    }
+
+    private function event(PaymentEvent $event)
+    {
+        $this->events->add($event);
     }
 }

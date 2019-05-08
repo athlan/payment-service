@@ -57,8 +57,10 @@ class GatewaySelection
 
     public function selectGatewayById(string $gatewayId) : ?GatewayFactory
     {
-        return array_filter($this->gateways, function (GatewayWithConditions $gatewayWithConditions) use ($gatewayId) {
+        $items = array_filter($this->gateways, function (GatewayWithConditions $gatewayWithConditions) use ($gatewayId) {
             return $gatewayWithConditions->getGateway()->gatewayId() === $gatewayId;
         });
+
+        return ($items) ? $items[0]->getGateway() : null;
     }
 }

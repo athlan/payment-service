@@ -9,8 +9,8 @@ use MyCLabs\Enum\Enum;
  * @method static Status NEW()
  * @method static Status IN_PROCESS()
  * @method static Status WAITING_FOR_FINAL_CONFIRMATION()
- * @method static Status PROCESSED_SUCCESS()
- * @method static Status PROCESSED_FAILURE()
+ * @method static Status COMPLETED_SUCCESS()
+ * @method static Status COMPLETED_FAILURE()
  */
 class Status extends Enum
 {

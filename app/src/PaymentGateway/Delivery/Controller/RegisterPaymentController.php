@@ -3,7 +3,6 @@
 
 namespace App\PaymentGateway\Delivery\Controller;
 
-use App\PaymentGateway\Delivery\Controller\Dto\ErrorDto;
 use App\PaymentGateway\Delivery\Controller\Dto\RegisterPaymentRequestDto;
 use App\PaymentGateway\Delivery\Controller\Dto\RegisterPaymentResponseDto;
 use App\PaymentGateway\Domain\Usecase\RegisterPayment;
@@ -14,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Swagger\Annotations as Api;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RegisterPaymentController extends AbstractController
 {
@@ -44,6 +44,9 @@ class RegisterPaymentController extends AbstractController
      * @Api\Response(
      *     response=200,
      *     description="Registers payment.",
+     *     headers={
+     *       @Api\Header(header="Location", type="string", description="Location to process payment")
+     *     },
      *     @Model(type=RegisterPaymentResponseDto::class)
      * )
      * @Api\Parameter(
@@ -67,6 +70,15 @@ class RegisterPaymentController extends AbstractController
         $response = new RegisterPaymentResponseDto();
         $response->paymentId = $paymentId->toString();
 
-        return View::create($response, Response::HTTP_CREATED);
+        $return = View::create($response, Response::HTTP_CREATED);
+        $return->setLocation($this->getProcessUrl($paymentId));
+        return $return;
+    }
+
+    private function getProcessUrl($paymentId)
+    {
+        return $this->generateUrl('gateway.payment.process', [
+            'paymentId' => $paymentId,
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 }

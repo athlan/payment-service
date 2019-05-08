@@ -5,3 +5,19 @@ services:
 
     App\PaymentGateway\Domain\Usecase\RegisterPayment:
     App\PaymentGateway\Domain\Usecase\ProcessPayment:
+    App\PaymentGateway\Domain\Usecase\CompletePayment:
+    App\PaymentGateway\Domain\Usecase\CallbackPayment:
+
+doctrine:
+    orm:
+        mappings:
+            Money:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/PaymentGateway/Infrastructure/Doctrine/mappings/money'
+                prefix: 'Money'
+            PaymentGateway:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/PaymentGateway/Infrastructure/Doctrine/mappings/domain'
+                prefix: 'App\PaymentGateway\Domain\Model'
