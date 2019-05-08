@@ -5,7 +5,7 @@
 gateway.payment.getstatus:
     controller: 'App\PaymentGateway\Delivery\Controller\GetPaymentStatusController:getStatus'
     methods: GET
-    path: /api/payment/{paymentId}/status
+    path: /api/payment/{paymentId}
     defaults: { _format: json }
 
 gateway.payment.register:

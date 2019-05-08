@@ -1,0 +1,9 @@
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\PaymentGateway\Delivery\Command\:
+        resource: '../../../src/PaymentGateway/Delivery/Command'
+        tags: ['console.command']
