@@ -1,0 +1,18 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\PaymentGateway\Domain\Model\PaymentEvent" table="payments_events">
+
+        <id name="eventId" column="event_id" type="string" length="36">
+            <generator strategy="NONE" />
+        </id>
+
+        <field name="paymentId" column="payment_id" type="string" length="36" />
+        <field name="date" column="event_date" type="datetime" />
+        <field name="eventType" column="event_type" type="string" />
+        <field name="data" column="event_data" type="json" nullable="true" />
+    </entity>
+
+</doctrine-mapping>

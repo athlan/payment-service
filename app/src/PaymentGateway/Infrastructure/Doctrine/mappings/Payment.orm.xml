@@ -14,7 +14,15 @@
         <field name="sourceSystem" column="source_system" type="string" nullable="false" />
         <field name="paymentType" column="payment_type" type="string" nullable="false" />
         <field name="status" column="status" type="string" nullable="false" />
-        <field name="events" column="events" type="json" nullable="true" />
+
+        <one-to-many field="events"
+                     target-entity="App\PaymentGateway\Domain\Model\PaymentEvent"
+                     mapped-by="paymentId"
+                     orphan-removal="true">
+            <cascade>
+                <cascade-all />
+            </cascade>
+        </one-to-many>
     </entity>
 
 </doctrine-mapping>
