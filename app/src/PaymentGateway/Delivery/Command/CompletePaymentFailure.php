@@ -58,5 +58,7 @@ class CompletePaymentFailure extends Command
 
         $now = new DateTime();
         $this->completePayment->markAsCompletedFailed(Uuid::fromString($paymentId), $now, $metadata);
+
+        $output->writeln("Payment has been completed with failure.");
     }
 }

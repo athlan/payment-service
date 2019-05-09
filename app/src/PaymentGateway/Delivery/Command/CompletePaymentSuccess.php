@@ -58,5 +58,7 @@ class CompletePaymentSuccess extends Command
 
         $now = new DateTime();
         $this->completePayment->markAsCompletedSuccess(Uuid::fromString($paymentId), $now, $metadata);
+
+        $output->writeln("Payment has been completed with success.");
     }
 }
