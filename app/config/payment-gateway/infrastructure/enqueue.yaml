@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\PaymentGateway\Infrastructure\Enqueue\EnqueueNotificationHandler:
+        tags:
+            - { name: kernel.event_listener, event: "App\\PaymentGateway\\Domain\\Model\\Notification\\PaymentCompletedSuccess" }
+            - { name: kernel.event_listener, event: "App\\PaymentGateway\\Domain\\Model\\Notification\\PaymentCompletedFailure" }

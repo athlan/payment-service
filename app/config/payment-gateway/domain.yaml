@@ -8,10 +8,6 @@ services:
     App\PaymentGateway\Domain\Usecase\CompletePayment:
     App\PaymentGateway\Domain\Usecase\CallbackPayment:
     App\PaymentGateway\Domain\Usecase\Notification\CompletePaymentNotification:
-        $eventDispatcher: '@paymentgateway.payment.notification.eventbus'
-
-    paymentgateway.payment.notification.eventbus:
-        class: Symfony\Component\EventDispatcher\EventDispatcher
 
 doctrine:
     orm:
