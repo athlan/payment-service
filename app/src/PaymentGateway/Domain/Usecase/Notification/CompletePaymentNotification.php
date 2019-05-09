@@ -3,6 +3,7 @@
 
 namespace App\PaymentGateway\Domain\Usecase\Notification;
 
+use App\PaymentGateway\Domain\Model\Notification\PaymentCompletedFailure;
 use App\PaymentGateway\Domain\Model\Notification\PaymentCompletedSuccess;
 use App\PaymentGateway\Domain\Model\PaymentRepository;
 use App\PaymentGateway\Domain\Model\Status;
@@ -46,7 +47,11 @@ class CompletePaymentNotification
             throw new LogicException("Payment is not in expected COMPLETED_FAILURE state.");
         }
 
-        // TODO
+        $notification = new PaymentCompletedFailure();
+        $notification->paymentId = $paymentId;
+
+        $event = NotificationEvent::of($notification);
+        $this->eventDispatcher->dispatch($event->getName(), $event);
     }
 
     public function notifyCompletedSuccess(UuidInterface $paymentId, DateTime $now, array $metadata = null)
