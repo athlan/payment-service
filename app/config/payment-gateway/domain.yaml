@@ -7,6 +7,7 @@ services:
     App\PaymentGateway\Domain\Usecase\ProcessPayment:
     App\PaymentGateway\Domain\Usecase\CompletePayment:
     App\PaymentGateway\Domain\Usecase\CallbackPayment:
+    App\PaymentGateway\Domain\Usecase\Notification\CompletePaymentNotification:
 
 doctrine:
     orm:

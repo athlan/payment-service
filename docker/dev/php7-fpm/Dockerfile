@@ -21,7 +21,7 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 && "date"
 
 # Type docker-php-ext-install to see available extensions
-RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql pgsql
+RUN docker-php-ext-install bcmath pdo pdo_mysql pdo_pgsql pgsql
 
 
 # install xdebug

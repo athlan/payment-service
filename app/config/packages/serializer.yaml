@@ -3,5 +3,8 @@ services:
         autowire: true
         autoconfigure: true
 
-    Symfony\Component\Serializer\Normalizer\PropertyNormalizer:
+    Symfony\Component\Serializer\Normalizer\ObjectNormalizer:
+        tags: ['serializer.normalizer']
+
+    Symfony\Component\Serializer\Normalizer\DateTimeNormalizer:
         tags: ['serializer.normalizer']
