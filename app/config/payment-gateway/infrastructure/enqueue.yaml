@@ -4,6 +4,9 @@ services:
         autoconfigure: true
 
     App\PaymentGateway\Infrastructure\Enqueue\EnqueueNotificationHandler:
+        arguments:
+            $dsn: '%env(resolve:EVENTS_BROADCAST_DSN)%'
+            $topicName: '%env(resolve:EVENTS_BROADCAST_TOPIC)%'
         tags:
             - { name: kernel.event_listener, event: "App\\PaymentGateway\\Domain\\Model\\Notification\\PaymentCompletedSuccess" }
             - { name: kernel.event_listener, event: "App\\PaymentGateway\\Domain\\Model\\Notification\\PaymentCompletedFailure" }

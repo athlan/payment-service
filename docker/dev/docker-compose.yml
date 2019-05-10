@@ -30,10 +30,7 @@ services:
         ports:
             - ${DB_ADMIN_PORT}:8080
     rabbit:
-        image: rabbitmq:3.7-alpine
-        ports:
-            - 5672:5672
-    rabbit-admin:
         image: rabbitmq:3.7-management-alpine
         ports:
+            - 5672:5672
             - 15672:15672
