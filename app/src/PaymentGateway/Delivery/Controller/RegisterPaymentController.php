@@ -42,7 +42,7 @@ class RegisterPaymentController extends AbstractController
     /**
      * @Api\Post
      * @Api\Response(
-     *     response=200,
+     *     response=201,
      *     description="Registers payment.",
      *     headers={
      *       @Api\Header(header="Location", type="string", description="Location to process payment")
