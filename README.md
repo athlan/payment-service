@@ -8,7 +8,9 @@ of gateways interacting with unified API.
 Service is exposed via REST API and broacasting notification events on queue sytems using
 [Enqueue](https://github.com/php-enqueue).
 
-* REST API Documentation: http://localhost:8081/api/doc
+* REST API Documentation:
+  * [Online schema](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/athlan/payment-service/master/doc/doc.json)
+  * Local: http://localhost:8081/api/doc
 
 ### Flow
 
