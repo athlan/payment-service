@@ -80,8 +80,7 @@ class ProcessPayment
     private function createPurchaseParams(Payment $payment, $returnUrl, $callbackUrl)
     {
         $params = array(
-            'amount' => $payment->getAmount()->getAmount(),
-            'currency' => $payment->getAmount()->getCurrency(),
+            'money' => $payment->getAmount(),
             'description' => $payment->getDescription(),
             'returnUrl' => $returnUrl,
             'notifyUrl' => $callbackUrl,
