@@ -8,6 +8,8 @@ services:
         environment:
             POSTGRES_DB: ${POSTGRES_DATABASE}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        networks:
+            - network
     php:
         build:
             context: php7-fpm
@@ -16,6 +18,8 @@ services:
         volumes:
             - ${SYMFONY_APP_PATH}:/var/www/symfony
             - ./var/logs/symfony:/var/www/symfony/app/logs
+        networks:
+            - network
     nginx:
         build: nginx
         ports:
@@ -24,13 +28,23 @@ services:
             - php
         volumes:
             - ./var/logs/nginx/:/var/log/nginx
+        networks:
+          - network
     adminer:
         image: adminer
         restart: always
         ports:
             - ${DB_ADMIN_PORT}:8080
+        networks:
+            - network
     rabbit:
         image: rabbitmq:3.7-management-alpine
         ports:
             - 5672:5672
             - 15672:15672
+        networks:
+            - network
+
+networks:
+    network:
+        driver: bridge
