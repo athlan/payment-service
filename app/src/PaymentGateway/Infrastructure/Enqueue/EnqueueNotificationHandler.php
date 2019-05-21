@@ -54,6 +54,7 @@ class EnqueueNotificationHandler
         $body = $this->serializer->serialize($event, 'json');
         $properties = [
             'message_type' => get_class($event),
+            'source_system' => $event->sourceSystem,
         ];
         $headers = [];
 

@@ -25,7 +25,13 @@ class PaymentCompletedSuccess
     public $paymentId;
 
     /**
-     * @var Status
+     * @var string
      */
     public $status;
+
+    /**
+     * @var string
+     */
+    public $sourceSystem;
+
 }

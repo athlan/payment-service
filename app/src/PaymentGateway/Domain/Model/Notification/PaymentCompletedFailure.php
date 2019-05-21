@@ -28,4 +28,10 @@ class PaymentCompletedFailure
      * @var string
      */
     public $status;
+
+    /**
+     * @var string
+     */
+    public $sourceSystem;
+
 }

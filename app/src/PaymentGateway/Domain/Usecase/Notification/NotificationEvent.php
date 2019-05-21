@@ -4,6 +4,8 @@
 namespace App\PaymentGateway\Domain\Usecase\Notification;
 
 
+use App\PaymentGateway\Domain\Model\Notification\PaymentCompletedFailure;
+use App\PaymentGateway\Domain\Model\Notification\PaymentCompletedSuccess;
 use Symfony\Component\EventDispatcher\Event;
 
 class NotificationEvent extends Event
@@ -14,7 +16,7 @@ class NotificationEvent extends Event
     private $name;
 
     /**
-     * @var mixed
+     * @var PaymentCompletedSuccess|PaymentCompletedFailure
      */
     private $event;
 
@@ -41,7 +43,7 @@ class NotificationEvent extends Event
     }
 
     /**
-     * @return mixed
+     * @return PaymentCompletedSuccess|PaymentCompletedFailure
      */
     public function getEvent()
     {

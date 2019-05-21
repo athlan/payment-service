@@ -51,6 +51,7 @@ class CompletePaymentNotification
         $notification->paymentId = $paymentId;
         $notification->date = $now;
         $notification->status = $payment->getStatus()->getValue();
+        $notification->sourceSystem = $payment->getSourceSystem();
 
         $event = NotificationEvent::of($notification);
         $this->eventDispatcher->dispatch($event->getName(), $event);
@@ -71,6 +72,7 @@ class CompletePaymentNotification
         $notification->paymentId = $paymentId;
         $notification->date = $now;
         $notification->status = $payment->getStatus()->getValue();
+        $notification->sourceSystem = $payment->getSourceSystem();
 
         $event = NotificationEvent::of($notification);
         $this->eventDispatcher->dispatch($event->getName(), $event);
