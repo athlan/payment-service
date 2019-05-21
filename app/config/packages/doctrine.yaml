@@ -14,6 +14,9 @@ doctrine:
             charset: utf8
             collate: utf8_unicode_ci
         url: '%env(resolve:DATABASE_URL)%'
+        types:
+            datetime: SLLH\Doctrine\DBAL\Types\UTCDateTimeType
+            datetimetz: SLLH\Doctrine\DBAL\Types\UTCDateTimeType
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore

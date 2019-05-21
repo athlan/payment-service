@@ -16,6 +16,7 @@
         "ramsey/uuid": "^3.8",
         "ramsey/uuid-doctrine": "^1.5",
         "sensio/framework-extra-bundle": "^5.3",
+        "sllh/doctrine-dbal-utc-datetime": "^1.0",
         "symfony/asset": "4.2.*",
         "symfony/console": "4.2.*",
         "symfony/dotenv": "4.2.*",

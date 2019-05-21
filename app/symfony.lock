@@ -228,6 +228,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "sllh/doctrine-dbal-utc-datetime": {
+        "version": "v1.0.0"
+    },
     "symfony/asset": {
         "version": "v4.2.8"
     },
