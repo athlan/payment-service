@@ -6,12 +6,15 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^1.10",
+        "doctrine/doctrine-migrations-bundle": "^2.0",
         "doctrine/orm": "^2.6",
         "enqueue/amqp-lib": "^0.9.8",
         "enqueue/enqueue": "^0.9.9",
+        "friendsofsymfony/rest-bundle": "2.5.0",
         "league/omnipay": "^3",
         "mcfedr/uuid-extra-bundle": "^3.1",
         "myclabs/php-enum": "^1.6",
+        "nelmio/api-doc-bundle": "3.4.0",
         "omnipay/dotpay": "@dev",
         "ramsey/uuid": "^3.8",
         "ramsey/uuid-doctrine": "^1.5",
@@ -78,7 +81,7 @@
     "repositories": {
         "omnipay/dotpay": {
             "type": "path",
-            "url": "../omnipay/omnipay-dotpay",
+            "url": "omnipay/omnipay-dotpay",
             "options": {
                 "symlink": true
             }

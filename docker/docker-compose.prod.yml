@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  app:
+    image: cloud.canister.io:5000/nowinypl/payment-service:${APP_VERSION}
+    env_file:
+      - docker/.env.prod
+    volumes:
+      - ./logs/app:/app/var/log
+      - ./sessions:/app/var/sessions
+    ports:
+      - ${APP_PORT}:80
+
+networks:
+  default:
+    driver: bridge

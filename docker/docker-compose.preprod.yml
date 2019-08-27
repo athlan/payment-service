@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: ..
+      target: app-prod
+      dockerfile: docker/Dockerfile
+    depends_on:
+      - db
+    env_file:
+      - .env.preprod
+    volumes:
+      - ./var/app/uploads:/app/public/uploads
+      - ./var/app/logs/app:/app/var/log
+      - ./var/app/sessions:/app/var/sessions
+    ports:
+      - 8080:80
+
+  db:
+    image: postgres:11.2
+    restart: always
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - "./var/data/postgres:/var/lib/postgresql/data"
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge

@@ -1,0 +1,22 @@
+2019-08-27 18:32:51,197 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2019-08-27 18:32:51,336 INFO supervisord started with pid 7
+2019-08-27 18:32:52,340 INFO spawned: 'nginx' with pid 10
+2019-08-27 18:32:52,345 INFO spawned: 'php7-fpm' with pid 11
+2019-08-27 18:32:53,900 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-08-27 18:32:53,901 INFO success: php7-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-08-27 18:33:04,252 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2019-08-27 18:33:04,255 INFO supervisord started with pid 7
+2019-08-27 18:33:05,260 INFO spawned: 'nginx' with pid 10
+2019-08-27 18:33:05,263 INFO spawned: 'php7-fpm' with pid 11
+2019-08-27 18:33:06,348 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-08-27 18:33:06,348 INFO success: php7-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-08-27 18:33:09,742 WARN received SIGINT indicating exit request
+2019-08-27 18:33:09,742 INFO waiting for nginx, php7-fpm to die
+2019-08-27 18:33:09,752 INFO stopped: php7-fpm (exit status 0)
+2019-08-27 18:33:09,757 INFO stopped: nginx (exit status 0)
+2019-08-27 19:26:58,702 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2019-08-27 19:26:58,719 INFO supervisord started with pid 7
+2019-08-27 19:26:59,722 INFO spawned: 'nginx' with pid 10
+2019-08-27 19:26:59,725 INFO spawned: 'php7-fpm' with pid 11
+2019-08-27 19:27:01,652 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-08-27 19:27:01,653 INFO success: php7-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
