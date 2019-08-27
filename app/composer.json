@@ -17,6 +17,8 @@
         "ramsey/uuid-doctrine": "^1.5",
         "sensio/framework-extra-bundle": "^5.3",
         "sllh/doctrine-dbal-utc-datetime": "^1.0",
+        "friendsofsymfony/rest-bundle": "2.5.0",
+        "nelmio/api-doc-bundle": "3.4.0",
         "symfony/asset": "4.2.*",
         "symfony/console": "4.2.*",
         "symfony/dotenv": "4.2.*",
@@ -78,7 +80,7 @@
     "repositories": {
         "omnipay/dotpay": {
             "type": "path",
-            "url": "../omnipay/omnipay-dotpay",
+            "url": "omnipay/omnipay-dotpay",
             "options": {
                 "symlink": true
             }

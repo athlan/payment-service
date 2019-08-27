@@ -79,6 +79,13 @@ bin/console app:payment:complete:failure:notification PAYMENT_ID
 To setup development environment, run Docker Compose:
 
 ```
-cd docker/dev
-docker-compose up -d
+make
+make start
+```
+
+### Build and publish
+
+```
+./bin/build.sh
+./bin/publish.sh
 ```

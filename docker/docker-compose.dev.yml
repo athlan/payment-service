@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: ..
+      target: app-dev
+      dockerfile: docker/Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - ../app:/app
+    env_file:
+      - .env.local
+
+  db:
+    image: postgres:11.2
+    restart: always
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - "./var/data/postgres:/var/lib/postgresql/data"
+    networks:
+      - default
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - db
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+  paymentservice_network:
+    external: true
