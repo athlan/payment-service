@@ -158,7 +158,7 @@ endif
 vendor: composer.lock
 	$(EXEC) composer install -n
 
-composer.lock: composer.json
+composer.lock: app/composer.json
 	@echo composer.lock is not up to date.
 
 node_modules: yarn.lock

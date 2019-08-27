@@ -22,6 +22,7 @@ services:
     restart: always
     environment:
       POSTGRES_DB: app
+      POSTGRES_USER: app
       POSTGRES_PASSWORD: pass
     volumes:
       - "./var/data/postgres:/var/lib/postgresql/data"
