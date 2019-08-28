@@ -1,4 +1,7 @@
 {
+    "chrisguitarguy/request-id-bundle": {
+        "version": "3.0.2"
+    },
     "clue/stream-filter": {
         "version": "v1.4.1"
     },
@@ -121,6 +124,9 @@
     },
     "moneyphp/money": {
         "version": "v3.2.1"
+    },
+    "monolog/monolog": {
+        "version": "1.24.0"
     },
     "myclabs/php-enum": {
         "version": "1.6.6"
@@ -316,6 +322,23 @@
     },
     "symfony/inflector": {
         "version": "v4.2.8"
+    },
+    "symfony/monolog-bridge": {
+        "version": "v4.2.11"
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "6240c6d43e8237a32452f057f81816820fd56ab6"
+        },
+        "files": [
+            "config/packages/dev/monolog.yaml",
+            "config/packages/prod/monolog.yaml",
+            "config/packages/test/monolog.yaml"
+        ]
     },
     "symfony/options-resolver": {
         "version": "v4.2.8"
