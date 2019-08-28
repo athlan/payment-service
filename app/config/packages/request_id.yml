@@ -1,0 +1,5 @@
+chrisguitarguy_request_id:
+    generator_service: App\Component\RequestId\AppRequestIdGenerator
+
+services:
+    App\Component\RequestId\AppRequestIdGenerator:

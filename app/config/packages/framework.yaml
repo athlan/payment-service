@@ -14,4 +14,4 @@ framework:
     #esi: true
     #fragments: true
     php_errors:
-        log: true
+        log: 6135 # E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_USER_DEPRECATED
