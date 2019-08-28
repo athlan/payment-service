@@ -1,6 +1,6 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: 'App\PaymentGateway\Delivery\Controller\DefaultController:index'
 
 gateway.payment.getstatus:
     controller: 'App\PaymentGateway\Delivery\Controller\GetPaymentStatusController:getStatus'
