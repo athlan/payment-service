@@ -2574,7 +2574,7 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "../omnipay/omnipay-dotpay",
+                "url": "omnipay/omnipay-dotpay",
                 "reference": "a268342d277bb73bf1e8247e55de2b929c4e865d",
                 "shasum": null
             },

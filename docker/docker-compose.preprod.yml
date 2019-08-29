@@ -15,7 +15,7 @@ services:
       - ./var/app/logs/app:/app/var/log
       - ./var/app/sessions:/app/var/sessions
     ports:
-      - 8080:80
+      - 8180:80
 
   db:
     image: postgres:11.2
