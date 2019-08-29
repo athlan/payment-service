@@ -63,7 +63,7 @@ class ProcessPaymentController extends AbstractController
             }
         }
         catch (LogicException $e) {
-            return $this->createNotFoundException($e->getMessage());
+            throw $this->createNotFoundException($e->getMessage());
         }
     }
 

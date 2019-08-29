@@ -36,6 +36,10 @@ class GetPaymentStatusController extends AbstractController
      *     description="Gets payment status.",
      *     @Model(type=GetPaymentStatusResponseDto::class)
      * )
+     * @Api\Response(
+     *     response=404,
+     *     description="Payment does not exists.",
+     * )
      * @Api\Parameter(
      *     name="paymentId",
      *     in="path",
@@ -46,6 +50,10 @@ class GetPaymentStatusController extends AbstractController
     public function getStatus(Request $request, $paymentId)
     {
         $payment = $this->paymentRepository->getByPaymentId(Uuid::fromString($paymentId));
+
+        if (null === $payment) {
+            throw $this->createNotFoundException();
+        }
 
         $response = new GetPaymentStatusResponseDto();
         $response->paymentId = $payment->getPaymentId()->toString();
