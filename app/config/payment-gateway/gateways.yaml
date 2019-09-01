@@ -25,7 +25,7 @@ services:
                 accountId: '%env(GATEWAY_DOTPAY_ACCOUNT_ID)%'
                 pid: '%env(GATEWAY_DOTPAY_PIN)%'
                 type: '4'
-                action: 'https://ssl.dotpay.pl/test_payment/'
+                action: '%env(GATEWAY_DOTPAY_ACTION)%'
                 lang: 'pl'
                 apiVersion: 'dev'
                 channel: 0
