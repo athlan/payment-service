@@ -64,6 +64,9 @@ class CallbackPayment
 
         try {
             $gatewayId = $this->getGatewayId($payment);
+            if ($gatewayId === null) {
+                throw new LogicException("Cannot find gatewayId for payment");
+            }
 
             $gatewayFactory = $this->gatewaySelection->selectGatewayById($gatewayId);
             if ($gatewayFactory === null) {
@@ -105,7 +108,7 @@ class CallbackPayment
     private function getGatewayId(Payment $payment)
     {
         foreach ($payment->getEvents() as $event) {
-            if ($event->getEventType() === PaymentEventType::PROCESS_START()) {
+            if ($event->getEventType()->equals(PaymentEventType::PROCESS_START())) {
                 return $event->getData()['gatewayId'];
             }
         }
