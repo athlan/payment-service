@@ -75,7 +75,7 @@ class Payment
         $this->status = Status::NEW();
 
         $this->events = new ArrayCollection();
-        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::CREATED(), $createdAt));
+        $this->event(new PaymentEvent($this, PaymentEventType::CREATED(), $createdAt));
     }
 
     private function generateId()
@@ -168,14 +168,14 @@ class Payment
         }
 
         $this->status = Status::IN_PROCESS();
-        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::PROCESS_START(), $processAt, [
+        $this->event(new PaymentEvent($this, PaymentEventType::PROCESS_START(), $processAt, [
             'gatewayId' => $gatewayId,
         ]));
     }
 
     public function callbackNotification(DateTime $processAt, array $data)
     {
-        $this->events[] = new PaymentEvent($this->paymentId, PaymentEventType::CALLBACK_NOTIFICATION(), $processAt, $data);
+        $this->events[] = new PaymentEvent($this, PaymentEventType::CALLBACK_NOTIFICATION(), $processAt, $data);
     }
 
     public function markAsPending(DateTime $processAt)
@@ -184,7 +184,7 @@ class Payment
             throw new LogicException("Payment cannot be processed because it's not in process");
         }
 
-        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::NOTIFICATION_PENDING(), $processAt));
+        $this->event(new PaymentEvent($this, PaymentEventType::NOTIFICATION_PENDING(), $processAt));
     }
 
     public function markAsCompletedFailed(DateTime $processAt, array $metadata = null)
@@ -194,7 +194,7 @@ class Payment
         }
 
         $this->status = Status::COMPLETED_FAILURE();
-        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::COMPLETED_FAILURE(), $processAt, $metadata));
+        $this->event(new PaymentEvent($this, PaymentEventType::COMPLETED_FAILURE(), $processAt, $metadata));
     }
 
     public function markAsCompletedSuccess(DateTime $processAt, array $metadata = null)
@@ -204,7 +204,7 @@ class Payment
         }
 
         $this->status = Status::COMPLETED_SUCCESS();
-        $this->event(new PaymentEvent($this->paymentId, PaymentEventType::COMPLETED_SUCCESS(), $processAt, $metadata));
+        $this->event(new PaymentEvent($this, PaymentEventType::COMPLETED_SUCCESS(), $processAt, $metadata));
     }
 
     private function event(PaymentEvent $event)

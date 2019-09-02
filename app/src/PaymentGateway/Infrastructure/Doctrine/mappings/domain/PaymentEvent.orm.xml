@@ -9,7 +9,9 @@
             <generator strategy="NONE" />
         </id>
 
-        <field name="paymentId" column="payment_id" type="string" length="36" />
+        <many-to-one field="payment" target-entity="App\PaymentGateway\Domain\Model\Payment" inversed-by="events">
+            <join-column name="payment_id" referenced-column-name="id" />
+        </many-to-one>
         <field name="date" column="event_date" type="datetime" />
         <field name="eventType" column="event_type" type="string" />
         <field name="data" column="event_data" type="json" nullable="true" />

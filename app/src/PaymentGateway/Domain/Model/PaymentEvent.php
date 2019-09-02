@@ -15,9 +15,9 @@ class PaymentEvent
     private $eventId;
 
     /**
-     * @var UuidInterface
+     * @var Payment
      */
-    private $paymentId;
+    private $payment;
 
     /**
      * @var PaymentEventType
@@ -36,18 +36,18 @@ class PaymentEvent
 
     /**
      * PaymentEvent constructor.
-     * @param UuidInterface $paymentId
+     * @param Payment $payment
      * @param PaymentEventType $eventType
      * @param DateTime $date
      * @param array $data
      */
-    public function __construct(UuidInterface $paymentId,
+    public function __construct(Payment $payment,
                                 PaymentEventType $eventType,
                                 DateTime $date,
                                 array $data = null)
     {
         $this->eventId = Uuid::uuid4();
-        $this->paymentId = $paymentId;
+        $this->payment = $payment;
         $this->eventType = $eventType;
         $this->date = $date;
         $this->data = $data;
@@ -66,7 +66,7 @@ class PaymentEvent
      */
     public function getPaymentId(): UuidInterface
     {
-        return $this->paymentId;
+        return $this->payment->getPaymentId();
     }
 
     /**
@@ -74,7 +74,7 @@ class PaymentEvent
      */
     public function getEventType(): PaymentEventType
     {
-        return $this->eventType;
+        return new PaymentEventType($this->eventType);
     }
 
     /**

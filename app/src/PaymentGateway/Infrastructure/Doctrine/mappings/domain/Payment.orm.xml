@@ -18,7 +18,7 @@
 
         <one-to-many field="events"
                      target-entity="App\PaymentGateway\Domain\Model\PaymentEvent"
-                     mapped-by="paymentId"
+                     mapped-by="payment"
                      orphan-removal="true">
             <cascade>
                 <cascade-all />
