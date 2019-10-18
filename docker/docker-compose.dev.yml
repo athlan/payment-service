@@ -12,6 +12,9 @@ services:
       - ../app:/app
     env_file:
       - .env.local
+    networks:
+      - default
+      - paymentservice_network
 
   db:
     image: postgres:11.2
