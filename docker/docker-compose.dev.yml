@@ -12,9 +12,6 @@ services:
       - ../app:/app
     env_file:
       - .env.local
-    networks:
-      - default
-      - paymentservice_network
 
   db:
     image: postgres:11.2
@@ -25,8 +22,6 @@ services:
       POSTGRES_PASSWORD: pass
     volumes:
       - "./var/data/postgres:/var/lib/postgresql/data"
-    networks:
-      - default
 
   adminer:
     image: adminer
@@ -36,8 +31,15 @@ services:
     networks:
       - default
 
+  rabbit:
+    image: rabbitmq:3.7-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./var/rabbitmq/data:/var/lib/rabbitmq
+    hostname: rabbit_node_1
+
 networks:
   default:
     driver: bridge
-  paymentservice_network:
-    external: true
