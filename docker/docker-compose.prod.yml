@@ -5,6 +5,7 @@ services:
     image: cloud.canister.io:5000/nowinypl/nowiny-payment-service:${APP_VERSION}
     env_file:
       - docker/.env.prod
+    restart: unless-stopped
     volumes:
       - ./logs/app:/app/var/log
       - ./sessions:/app/var/sessions
