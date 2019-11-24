@@ -7,3 +7,9 @@ services:
     App\PaymentGateway\Delivery\Controller\:
         resource: '../../../src/PaymentGateway/Delivery/Controller'
         tags: ['controller.service_arguments']
+
+
+    App\PaymentGateway\Delivery\Controller\EventListener\RequestLogger:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
